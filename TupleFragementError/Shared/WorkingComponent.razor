@@ -1,0 +1,24 @@
+﻿@typeparam TRowData
+
+<div>
+	StringTemplate: @StringTemplate("basic string here")
+</div>
+
+<div>
+	@{
+        foreach (var item in Data!)
+        {            
+	       @ComplexTemplate(("complex string here", item))
+        }
+    }
+</div>
+
+
+@code {
+	[Parameter] public RenderFragment<string>? StringTemplate { get; set; }
+	//Does Not work
+    //[Parameter] public RenderFragment<(string extraInfo, TRowData stuff)>? ComplexTemplate { get; set; }
+    [Parameter] public RenderFragment<(string, TRowData)>? ComplexTemplate { get; set; }
+
+	[Parameter] public ICollection<TRowData>? Data { get; set; }
+}

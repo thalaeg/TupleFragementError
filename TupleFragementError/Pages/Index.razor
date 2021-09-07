@@ -1,0 +1,41 @@
+﻿@page "/"
+
+<h1>Check out commented code for what we expect to work</h1>
+
+<WorkingComponent TRowData=SampleClass Data=@(new List<SampleClass>() {sample, sample2})>
+	<StringTemplate Context="stringContext">
+		My cool string is = @stringContext
+	</StringTemplate>
+	<ComplexTemplate Context="complexContext">
+        <div>
+            My string: @* does not work: @complexContext.extraInfo*@ @complexContext.Item1
+		</div>
+        <div>
+            My class title: @*does not work: @complexContext.stuff.Title*@ @complexContext.Item2.Title
+		</div>
+        <div>
+            My class title: @*does not work: @complexContext.stuff.TurnOn.ToString()*@ @complexContext.Item2.TurnOn.ToString()
+		</div>
+	</ComplexTemplate>
+</WorkingComponent>
+
+@code { 
+    private class SampleClass
+    {
+        public string Title { get; set; }
+
+        public bool TurnOn { get; set; }
+    }
+
+	 private SampleClass sample = new SampleClass()
+    {
+        Title = "Sample title",
+        TurnOn = true
+    };
+
+    private SampleClass sample2 = new SampleClass()
+    {
+        Title = "I am Erich",
+        TurnOn = false
+    };
+}
